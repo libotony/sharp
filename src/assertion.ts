@@ -1,6 +1,7 @@
+// tslint:disable:max-line-length
 import '@vechain/connex'
 import BigNumber from 'bignumber.js'
-import { strict as assert } from 'assert'
+import { assert } from 'chai'
 import { abi } from '@vechain/abi'
 import * as V from './validator'
 
@@ -51,8 +52,10 @@ export const Assertion: Assertion  = {
 
                 return this
             },
-            equals(transfer) {
-                assert.deepEqual(transfer, data)
+            equal(transfer) {
+                assert.equal(transfer.sender, data.sender, `TransferLog.sender expected ${JSON.stringify(transfer.sender)}`)
+                assert.equal(transfer.recipient, data.recipient, `TransferLog.recipient expected ${JSON.stringify(transfer.recipient)}`)
+                assert.equal(transfer.amount, data.amount, `TransferLog.amount expected ${JSON.stringify(new BigNumber(transfer.amount).toString())} in hexadecimal`)
             }
         }
     },
@@ -92,9 +95,9 @@ export const Assertion: Assertion  = {
                 address = addr
                 return this
             },
-            equals(actual) {
+            equal(actual) {
                 const decoded = coder.decode(actual.data, actual.topics)
-                assert.equal(actual.address, address)
+                assert.equal(actual.address, address, `EventLog expect emitted by ${JSON.stringify(address)}`)
                 for (const [index, param] of params.entries()) {
                     assert.equal(decoded[index], param)
                 }
