@@ -8,23 +8,29 @@ export interface Assertion {
     transfer(): Assertion.TransferLog
     method(abi: object): Assertion.MethodOutput
     event(abi: object): Assertion.EventLog
+    revert(): Assertion.Revert
 }
 
 export namespace Assertion {
     export interface TransferLog {
         logs(sender: string, recipient: string, amount: string | number): this
-        equals(actual: Connex.Thor.Transfer): void
+        equal(actual: Connex.Thor.Transfer): void
     }
 
     export interface MethodOutput {
         outputs(...args: any[]): this
-        equals(actual: Partial<Connex.Thor.VMOutput> & Required<Pick<Connex.Thor.VMOutput, 'data'>>): void
+        equal(actual: Partial<Connex.Thor.VMOutput> & Required<Pick<Connex.Thor.VMOutput, 'data'>>): void
     }
 
     export interface EventLog {
         logs(...args: any[]): this
         by(addr: string): this
-        equals(actual: Connex.Thor.Event): void
+        equal(actual: Connex.Thor.Event): void
+    }
+
+    export interface Revert {
+        with(reason: string | RegExp): this
+        equal(actual: Pick<Connex.Thor.VMOutput, 'reverted'|'decoded'>): void
     }
 }
 
@@ -61,7 +67,7 @@ export const Assertion: Assertion  = {
                 params = args
                 return this
             },
-            equals(actual) {
+            equal(actual) {
                 const decoded = coder.decode(actual.data)
                 for (const [index, param] of params.entries()) {
                     assert.equal(decoded[index], param)
@@ -93,6 +99,26 @@ export const Assertion: Assertion  = {
                     assert.equal(decoded[index], param)
                 }
                 return
+            }
+        }
+    },
+    revert: () => {
+        let expect: string | RegExp
+        return {
+            with(reason) {
+                if (!reason) {
+                    throw new Error('bad input for arg reason')
+                }
+                expect = reason
+                return this
+            },
+            equal(actual) {
+                assert.isTrue(actual.reverted, 'VMOutput.reverted expect reverted to be true')
+                if (typeof expect === 'string') {
+                    assert.equal(actual.decoded!.revertReason, expect, `Decoded.revertReason expect to be ${JSON.stringify(expect)}`)
+                } else {
+                    assert.match(actual.decoded!.revertReason!, expect, 'Decoded.revertReason')
+                }
             }
         }
     }
