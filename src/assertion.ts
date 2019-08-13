@@ -73,7 +73,7 @@ export const Assertion: Assertion  = {
             equal(actual) {
                 const decoded = coder.decode(actual.data)
                 for (const [index, param] of params.entries()) {
-                    assert.equal(decoded[index], param)
+                    assert.deepEqual(decoded[index], param, `Method(${coder.definition.name}) Output#${index}${coder.definition.outputs[index].name ? '(' + coder.definition.outputs[index].name + ')' : '' } expected ${JSON.stringify(param)}`)
                 }
             }
         }
@@ -99,7 +99,7 @@ export const Assertion: Assertion  = {
                 const decoded = coder.decode(actual.data, actual.topics)
                 assert.equal(actual.address, address, `EventLog expect emitted by ${JSON.stringify(address)}`)
                 for (const [index, param] of params.entries()) {
-                    assert.equal(decoded[index], param)
+                    assert.deepEqual(decoded[index], param, `Event(${coder.definition.anonymous ? 'Anonymous' : coder.definition.name}) #${index}(${coder.definition.inputs[index].name}) expected ${JSON.stringify(param)}`)
                 }
                 return
             }
@@ -110,7 +110,7 @@ export const Assertion: Assertion  = {
         return {
             with(reason) {
                 if (!reason) {
-                    throw new Error('bad input for arg reason')
+                    throw new Error('arg#0 expected string or Regex')
                 }
                 expect = reason
                 return this
