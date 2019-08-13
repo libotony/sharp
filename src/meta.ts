@@ -40,7 +40,7 @@ export class ContractMeta {
         return JSON.parse(JSON.stringify(def))
     }
 
-    public Code() {
+    get Code() {
         return this.bytecode
     }
 
