@@ -2,7 +2,7 @@
 
 Experimental contract test utility package - just as `elegant` as [Connex](https://connex.vecha.in/#/).
 
-> With Connex-Enhanced VMOutput, you can inspect more elements of a contract call
+> With Connex-Enhanced VMOutput, you will be able to inspect more elements of a contract call
 
 ## Features
 
