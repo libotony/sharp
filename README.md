@@ -1,6 +1,8 @@
 # Sharp
 
-Experimental contract test utility package - just as `elegant` as [Connex]().
+Experimental contract test utility package - just as `elegant` as [Connex](https://connex.vecha.in/#/).
+
+> With Connex-Enhanced VMOutput, you can inspect more elements of a contract call
 
 ## Features
 
