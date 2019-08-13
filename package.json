@@ -1,7 +1,7 @@
 {
   "name": "sharp",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.0-beta.1",
+  "description": "Contract test utility",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "dependencies": {
@@ -22,6 +22,14 @@
     "build": "rm -fr dist && tsc -p ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "MIT"
+  "author": "tony.li",
+  "license": "LGPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/libotony/sharp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/libotony/sharp/issues"
+  },
+  "homepage": "https://github.com/libotony/sharp#readme"
 }
