@@ -35,6 +35,10 @@ export namespace Assertion {
     }
 }
 
+const maskBytes32 = (input: string) => {
+    return `${input.substr(0, 10)}...${input.substr(-8)}`
+}
+
 export const Assertion: Assertion  = {
     transfer() {
         let data: Required<Pick<Connex.Thor.Transfer, 'sender'|'recipient'|'amount'>>
@@ -98,6 +102,9 @@ export const Assertion: Assertion  = {
             equal(actual) {
                 const decoded = coder.decode(actual.data, actual.topics)
                 assert.equal(actual.address, address, `EventLog expect emitted by ${JSON.stringify(address)}`)
+                if (!coder.definition.anonymous) {
+                    assert.equal(actual.topics[0], coder.signature, `Event=>${coder.canonicalName} signature expected ${maskBytes32(coder.signature)}`)
+                }
                 for (const [index, param] of params.entries()) {
                     assert.deepEqual(decoded[index], param, `Event(${coder.definition.anonymous ? 'Anonymous' : coder.definition.name}) #${index}(${coder.definition.inputs[index].name}) expected ${JSON.stringify(param)}`)
                 }
