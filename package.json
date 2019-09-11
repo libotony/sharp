@@ -1,5 +1,5 @@
 {
-  "name": "sharp",
+  "name": "@libotony/sharp",
   "version": "1.0.0-beta.1",
   "description": "Contract test utility",
   "main": "dist/index.js",
