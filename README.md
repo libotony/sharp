@@ -2,13 +2,17 @@
 
 Experimental contract test utility package - just as `elegant` as [Connex](https://connex.vecha.in/#/).
 
-> With Connex-Enhanced VMOutput, you will be able to inspect more elements of a contract call
+> With VeChain-Enhanced VMOutput, you will be able to inspect more elements of a contract call than before
 
 ## Features
 
 + ContractMeta - manages contract bytecode and ABI
 + Awaiter - wait tx to be packed
 + Assertion - assert as much as you can image(event log, transfer log, method output)
+
+## Get Started
+
+[Sharp Example Project](https://github.com/libotony/sharp-example-vip180#sharp-example-project), a project shows a step by step guide of using sharp.
 
 ## API
 
