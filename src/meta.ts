@@ -83,7 +83,7 @@ export class ContractMeta {
                 let data = bytecode
 
                 if (coder.definition.inputs.length) {
-                    data += coder.encode(args).slice(2)
+                    data += ABICoder.encodeParameters(coder.definition.inputs, args).slice(2)
                 }
 
                 return {
